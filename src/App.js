@@ -1,24 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import SignIn from './SignIn';
+import { auth } from './index';
+import React, { useEffect, useMemo, useState } from 'react';
+import { onAuthStateChanged } from '@firebase/auth';
+import { Dashboard } from './Dashboard';
+
+export const UserContext = React.createContext({user:null, setUser: ()=>{}})
 
 function App() {
+  const [user,setUser] = useState()
+  const value = useMemo(
+    () => ({ user, setUser }), 
+    [user]
+  );
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        setUser(user)
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        setUser(null)
+      }
+    });
+  },[])
   return (
+    <UserContext.Provider value={value}>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {user ? <Dashboard/>: <SignIn/>}
+     
     </div>
+    </UserContext.Provider>
   );
 }
 
