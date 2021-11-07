@@ -17,7 +17,7 @@ import { auth, db } from "./index";
           // creating a firestore document {userID}
           await setDoc(doc(db, "users", user.uid), {
             name: "Not Set",
-            credit: 0
+            due: 0
           });
           setUser(user)
           // ...
@@ -42,23 +42,25 @@ import { auth, db } from "./index";
             });
         })
         return (
-            <div className="border mx-auto my-10 py-4">
+            <div className="container border mx-auto my-10 py-4 text-center text-black">
                 <div className="my-10">
                 <span className="mr-10">Email</span>
-                <input value={email} onChange={({target:{value}})=>setEmail(value)}/>
+                <input value={email} onChange={({target:{value}})=>setEmail(value)} className="border"/>
                 </div>
                 <div className="my-10">
                 <span className="mr-10">Password</span>
-                <input value={password} onChange={({target:{value}})=>setPassword(value)} type="password"/>
+                <input value={password} onChange={({target:{value}})=>setPassword(value)} type="password" className="border"/>
                 </div>
                 <div className="my-10 text-red-500">
                     {error ? error : ""}
                 </div>
                 <div>
+                <span className="my-10 mx-4">
                 <button onClick={()=>signUp(email,password)} className="border bg-gray-100 px-4 py-2">Sign UP</button>
-                </div>
-                <div>
+                </span>
+                <span className="my-10 mx-4">
                 <button onClick={()=>signIn(email,password)} className="border bg-gray-100 px-4 py-2">Log In</button>
+                </span>
                 </div>
                
             </div>
