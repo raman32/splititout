@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Spit It out
+This project was a hackathon project. It reads the text from image of bill, processes the text using google natural language API and classify the bills according to the types of expenditure and splits it among friend.
 
 ## Available Scripts
 
